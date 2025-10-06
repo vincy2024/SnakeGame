@@ -23,9 +23,23 @@
             <input type="range" id="speedSlider" min="1" max="10" value="5" class="slider">
         </div>
         <canvas id="gameCanvas" width="400" height="400"></canvas>
+        <!-- 移动端方向按键 -->
+        <div class="mobile-controls" aria-label="屏幕方向控制">
+            <div class="mobile-row">
+                <button id="btnUp" class="dir-btn" aria-label="向上">▲</button>
+            </div>
+            <div class="mobile-row">
+                <button id="btnLeft" class="dir-btn" aria-label="向左">◀</button>
+                <button id="btnRight" class="dir-btn" aria-label="向右">▶</button>
+            </div>
+            <div class="mobile-row">
+                <button id="btnDown" class="dir-btn" aria-label="向下">▼</button>
+            </div>
+        </div>
         <div class="game-instructions">
             <h3>游戏说明:</h3>
-            <p>使用方向键 ↑ ↓ ← → 控制蛇的移动</p>
+            <p>使用键盘方向键 ↑ ↓ ← → 控制蛇的移动</p>
+            <p>也可使用屏幕方向键进行控制（手机与桌面）</p>
             <p>吃到食物可以增加分数和蛇的长度</p>
             <p>撞到墙壁或自己的身体游戏结束</p>
         </div>

@@ -133,6 +133,30 @@ button:disabled {
     display: block;
 }
 
+/* 移动端屏幕方向按键样式 */
+.mobile-controls {
+    margin-top: 12px;
+    display: block; /* 在桌面与移动端均显示 */
+    user-select: none;
+    touch-action: none;
+}
+
+.mobile-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 6px 0;
+}
+
+.dir-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    font-size: 22px;
+    line-height: 1;
+    padding: 0;
+}
+
 .game-instructions {
     margin-top: 20px;
     text-align: left;
@@ -159,5 +183,8 @@ button:disabled {
     #gameCanvas {
         width: 100%;
         height: auto;
+    }
+    .mobile-controls {
+        display: block;
     }
 }

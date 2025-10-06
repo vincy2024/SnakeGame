@@ -8,6 +8,11 @@ const pauseBtn = document.getElementById('pauseBtn');
 const restartBtn = document.getElementById('restartBtn');
 const speedSlider = document.getElementById('speedSlider');
 const speedValue = document.getElementById('speedValue');
+// 移动端方向按钮
+const btnUp = document.getElementById('btnUp');
+const btnDown = document.getElementById('btnDown');
+const btnLeft = document.getElementById('btnLeft');
+const btnRight = document.getElementById('btnRight');
 
 // 游戏参数
 const gridSize = 20;
@@ -253,40 +258,48 @@ function resetGame() {
 
 // 键盘控制
 function changeDirection(e) {
-    // 防止反向移动
-    const preventReverse = (newX, newY) => {
-        return (newX === 0 && velocityX === 0) || 
-               (newY === 0 && velocityY === 0) || 
-               (newX !== -velocityX || newY !== -velocityY);
+    // 使用统一的设置方向逻辑
+    const setDirection = (newX, newY) => {
+        // 禁止直接反向（掉头）
+        if (newX === -velocityX && newY === -velocityY) return;
+        nextVelocityX = newX;
+        nextVelocityY = newY;
     };
     
     // 方向键控制
     switch (e.key) {
         case 'ArrowUp':
-            if (preventReverse(0, -1)) {
-                nextVelocityX = 0;
-                nextVelocityY = -1;
-            }
+            setDirection(0, -1);
             break;
         case 'ArrowDown':
-            if (preventReverse(0, 1)) {
-                nextVelocityX = 0;
-                nextVelocityY = 1;
-            }
+            setDirection(0, 1);
             break;
         case 'ArrowLeft':
-            if (preventReverse(-1, 0)) {
-                nextVelocityX = -1;
-                nextVelocityY = 0;
-            }
+            setDirection(-1, 0);
             break;
         case 'ArrowRight':
-            if (preventReverse(1, 0)) {
-                nextVelocityX = 1;
-                nextVelocityY = 0;
-            }
+            setDirection(1, 0);
             break;
     }
+}
+
+// 屏幕方向按钮事件绑定（点击与触摸）
+function bindMobileControls() {
+    if (!btnUp || !btnDown || !btnLeft || !btnRight) return;
+    const setDir = (x, y) => {
+        // 禁止直接反向（掉头）
+        if (x === -velocityX && y === -velocityY) return;
+        nextVelocityX = x;
+        nextVelocityY = y;
+    };
+    const add = (el, x, y) => {
+        el.addEventListener('click', () => setDir(x, y));
+        el.addEventListener('touchstart', (e) => { e.preventDefault(); setDir(x, y); }, { passive: false });
+    };
+    add(btnUp, 0, -1);
+    add(btnDown, 0, 1);
+    add(btnLeft, -1, 0);
+    add(btnRight, 1, 0);
 }
 
 // 绘制网格
@@ -338,6 +351,7 @@ pauseBtn.addEventListener('click', togglePause);
 restartBtn.addEventListener('click', resetGame);
 document.addEventListener('keydown', changeDirection);
 speedSlider.addEventListener('input', updateSpeedDisplay);
+bindMobileControls();
 
 // 初始化
 pauseBtn.disabled = true;
